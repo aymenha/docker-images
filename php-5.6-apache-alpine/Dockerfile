@@ -6,32 +6,30 @@ MAINTAINER Amine
 
 # Add basics first
 RUN apk update && apk upgrade && apk add \
-    bash apache2 php5-apache2 curl ca-certificates git php5 php5-phar php5-json php5-iconv php5-openssl tzdata openntpd nano \
+    bash apache2 php5-apache2 curl ca-certificates git php5 php5-phar tzdata openntpd nano \
     php5-curl \
     php5-mysql \
     php5-mysqli \
+    php5-pdo_mysql \
     php5-gd \
-    php5-ftp \
-    php5-fileinfo \
-    php5-mbstring \
-    php5-xmlwriter \
-    php5-xml \
-    php5-tokenizer \
+    # php5-ftp \
+    php5-intl \
+    php5-calendar \
+    php5-memcache \
+    # php5-xml \
+    php5-opcache \
     php5-mcrypt \
     php5-gmp \
-    php5-dom \
-    php5-pdo \
+    # php5-dom \
+    # php5-pdo \
     php5-zip \
     php5-bcmath \
-    php5-gd \
-    php5-pdo_mysql \
-    php5-mysql \
     php5-gettext \
-    php5-xmlreader \
+    # php5-xmlreader \
     php5-bz2 \
-    php5-curl \
-    php5-ctype \
-    php5-session \
+    # php5-ctype \
+    php5-pgsql \
+    php5-pdo_pgsql \
     && rm -f /var/cache/apk/*
 
 # Add Composer
@@ -80,8 +78,8 @@ RUN mkdir /run/apache2 \
     && sed -i "s#/var/www/localhost/htdocs#/app/public#" /etc/apache2/httpd.conf \
     && printf "\n<Directory \"/app/public\">\n\tAllowOverride All\n</Directory>\n" >> /etc/apache2/httpd.conf
 
-RUN mkdir -p bootstrap /app /app/public \
-    && chown -R apache:apache /app && chmod -R 755 /app
+# RUN mkdir -p bootstrap /app /app/public \
+#     && chown -R apache:apache /app && chmod -R 755 /app
 
 
 ADD start.sh /bootstrap/
